@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      @import "//sailthru.com/css/link.css";
+
+      body {
+        margin: 0;
+        font-family:'Helvetica Neue',Calibri,Helvetica,Arial,sans-serif;
+      }
+
+      #header {
+        background: #2c3747;
+        -webkit-box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+        -moz-box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+        position: relative;
+        z-index: 1030;
+        text-align: center;
+        padding:9px;
+      }
+
+      #content {
+        width: 600px;
+        margin:0 auto;
+      }
+
+      h1, h2, h3, h4 {
+        color: black;
+        background: white;
+        border: none;
+        margin-left: 0;
+      }
+
+      h1 {
+        margin-top: 15px;
+      }
+
+      p {
+        margin-left: 6px;
+      }
+
+      .message input {
+        height:auto;
+      }
+
+      .message {
+        margin-bottom: 30px;
+      }
+
+      .message.your-email {
+        margin-bottom: 0;
+      }
+
+      .simple-button {
+        font-family:'Helvetica Neue',Calibri,Helvetica,Arial,sans-serif;
+        border:1px solid #76a015;
+        background-color:#7fac05;
+        color:white;display:inline-block;
+        padding:0 32px;
+        margin:0;
+        border-radius:5px;
+        font-size:16px;
+        line-height:40px;
+        text-decoration:none;
+        vertical-align:center;
+        cursor:pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header" class="invite">
+        <a href="https://www.khanacademy.org">
+        <img src="https://khan-academy.appspot.com/images/ka-simplified-logo-white.png">
+        </a>
+      </div>
+      <div id="content">
+        <h1 class="title">Unsubscribe</h1>
+        <div class="message your-email">
+          <p><b>Your email:</b> {profile.email}</p>
+        </div>
+
+        <!--
+        Right now we send email in a couple of ways:
+
+         1. Through Google App Engine
+         2. Through Sailthru
+
+        Each of these mechanisms stores its own email preferences about opting
+        out, but they are not yet integrated.
+
+        For GAE emails, the only way you can opt out is to click an the
+        unsubscribe at the bottom of the email to unsubscribe from that kind of
+        email. There is currently no global opt out. This needs to be fixed!
+        TODO(dmnd): Allow global opt out of GAE emails.
+
+        For Sailthru emails, a global opt out is available here. But it won't
+        actually opt people out of other kinds of GAE email. So the language
+        here is kind of tricky. We compromise for now by calling Sailthru
+        emails "marketing emails". This is kind of misleading, but will be
+        fixed very soon.
+
+        TODO(dmnd): Make this option also opt people out of GAE emails, and
+        generally integrate Sailthru email with GAE ones.
+        -->
+
+        <!-- Unsubscribe for a specific email. Only shows if user has not
+        opted out of all email. -->
+        {if template}
+          {if contains(profile.optout_templates, template)}
+            <div class="message optout">
+              <p>
+                You have unsubscribed from "{template}" email from Khan
+                Academy. If you've changed your mind, click the
+                button below.
+              </p>
+              <form action="" method="post">
+                <input type="hidden" name".optout_template" value="1">
+                <input class="simple-button submit-button" name="action"
+                       value="Subscribe" type="submit" />
+              </form>
+            </div>
+          {else}
+            <div class="message optout">
+              <p>
+                You are currently receiving "{template}" email from Khan
+                Academy.
+                If you'd rather not receive this email you can unsubscribe by
+                clicking the button below.
+              <p>
+              <p>
+                If you ended up here by mistake, please just close this
+                window.
+              </p>
+              <form action="" method="post">
+                <input type="hidden" name"template" value="{template}">
+                <input type="hidden" name =".optout_template" value="1"/>
+                <input class="simple-button submit-button" name="action"
+                       value="Unsubscribe From Just This Email" type="submit" />
+              </form>
+            </div>
+          {/if}
+        {/if}
+
+        <!-- Unsubscribe from all email -->
+        <div class="message optout-all">
+          <p>
+            From time to time Khan Academy sends email to let you know
+            about things we think you're interested in. We'll always include
+            a link to unsubscribe from email of this type in the email
+            itself.
+          </p>
+
+          {if profile.optout=="all" || profile.optout=="blast"}
+          <p>
+            You have elected to not receive this email. Note that you
+            will still receive critical email like password resets.
+          </p>
+          <p>
+            If you would prefer to start receiving email again, please press
+           the button below.
+          </p>
+          <form action="" method="post">
+            <input class="simple-button submit-button" name="action"
+                   value="Subscribe" type="submit" />
+          </form>
+          {else}
+          <p>
+            If, however, you'd rather not receive <strong>any</strong>
+            marketing email from Khan Academy, please click on the button
+            below. Note that you will still receive critical emails such as
+            forgotten password requests.
+          </p>
+          <form action="" method="post">
+            <input type="hidden" name =".optout_all" value="1" />
+            <input class="simple-button submit-button" name="action"
+                   value="Unsubscribe From All Email" type="submit" />
+          </form>
+          {/if}
+        </div>
+      </div>
+  </body>
+</html>
