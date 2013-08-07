@@ -106,9 +106,14 @@
         generally integrate Sailthru email with GAE ones.
         -->
 
-        <!-- Unsubscribe for a specific email. Only shows if user has not
-        opted out of all email. -->
-        {if template}
+        <!--
+        Unsubscribe from a particular transactional email.
+        This does not opt people out from any kind of list - only
+        transactional emails with a certain template name sent to the user.
+
+        TODO(dmnd): This seems broken to me.
+        -->
+        {if !profile.optout && template}
           {if contains(profile.optout_templates, template)}
             <div class="message optout">
               <p>
@@ -144,7 +149,7 @@
           {/if}
         {/if}
 
-        <!-- Unsubscribe from all email -->
+        <!-- Unsubscribe from all emails! -->
         <div class="message optout-all">
           <p>
             From time to time Khan Academy sends email to let you know
@@ -153,31 +158,31 @@
             itself.
           </p>
 
-          {if profile.optout=="all" || profile.optout=="blast"}
-          <p>
-            You have elected to not receive this email. Note that you
-            will still receive critical email like password resets.
-          </p>
-          <p>
-            If you would prefer to start receiving email again, please press
-           the button below.
-          </p>
-          <form action="" method="post">
-            <input class="simple-button submit-button" name="action"
-                   value="Subscribe" type="submit" />
-          </form>
+          {if !profile.optout}
+            <p>
+              If, however, you'd rather not receive <strong>any</strong>
+              marketing email from Khan Academy, please click on the button
+              below. Note that you will still receive critical emails such as
+              forgotten password requests.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name =".optout_all" value="1" />
+              <input class="simple-button submit-button" name="action"
+                     value="Unsubscribe From All Email" type="submit" />
+            </form>
           {else}
-          <p>
-            If, however, you'd rather not receive <strong>any</strong>
-            marketing email from Khan Academy, please click on the button
-            below. Note that you will still receive critical emails such as
-            forgotten password requests.
-          </p>
-          <form action="" method="post">
-            <input type="hidden" name =".optout_all" value="1" />
-            <input class="simple-button submit-button" name="action"
-                   value="Unsubscribe From All Email" type="submit" />
-          </form>
+            <p>
+              You have elected to not receive this email. Note that you
+              will still receive critical email like password resets.
+            </p>
+            <p>
+              If you would prefer to start receiving email again, please press
+             the button below.
+            </p>
+            <form action="" method="post">
+              <input class="simple-button submit-button" name="action"
+                     value="Subscribe" type="submit" />
+            </form>
           {/if}
         </div>
       </div>
