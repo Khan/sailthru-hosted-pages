@@ -52,6 +52,10 @@
         margin-bottom: 0;
       }
 
+      .message.debug {
+        display: none;
+      }
+
       .simple-button {
         font-family:'Helvetica Neue',Calibri,Helvetica,Arial,sans-serif;
         border:1px solid #76a015;
@@ -80,6 +84,17 @@
         <h1 class="title">Unsubscribe</h1>
         <div class="message your-email">
           <p><b>Your email:</b> {profile.email}</p>
+        </div>
+
+        <!-- Only used for debugging! -->
+        <div class="message debug">
+          <p>profile.optout: "{profile.optout}"</p>
+          <p>template: "{template}"</p>
+          <form action="" method="post">
+            <input type="hidden" name="template" value="{template}">
+            <input class="simple-button submit-button" name="action"
+                   value="Subscribe" type="submit" />
+          </form>
         </div>
 
         <!--
