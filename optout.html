@@ -164,6 +164,35 @@
           {/if}
         {/if}
 
+        {if !profile.optout && (contains(profile.lists, "All Teachers")}
+        <div class="message optout">
+            <p>
+              Subscribe to "Teacher Updates" if you're interested in using Khan
+              Academy in a classroom. From time to time we'll send updates
+              about classroom-specific features or content improvements.
+            </p>
+          {if !contains(profile.lists, "Teacher Updates Suppression")}
+            <p>
+              You are currently subscribed to Teacher Updates.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Teacher Updates Suppression]" value="1"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Unsubscribe From Teacher Updates" type="submit" />
+            </form>
+          {else}
+            <p>
+              You are currently not subscribed to Teacher Updates.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Teacher Updates Suppression]" value="0"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Subscribe To Teacher Updates" type="submit" />
+            </form>
+          {/if}
+        </div>
+        {/if}
+
         <!-- Unsubscribe from all emails! -->
         <div class="message optout-all">
           <p>
