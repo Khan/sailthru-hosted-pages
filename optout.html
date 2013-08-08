@@ -193,6 +193,36 @@
         </div>
         {/if}
 
+        {if !profile.optout && (contains(profile.lists, "All Coaches")}
+        <div class="message optout">
+            <p>
+              Subscribe to "Coach Updates" if you're coaching someone else via
+              Khan Academy. From time to time we'll send updates about
+              coaching-specific features such as new reports or ways to guide
+              the content your student works on.
+            </p>
+          {if !contains(profile.lists, "Coach Updates Suppression")}
+            <p>
+              You are currently subscribed to Coach Updates.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Coach Updates Suppression]" value="1"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Unsubscribe From Coach Updates" type="submit" />
+            </form>
+          {else}
+            <p>
+              You are currently not subscribed to Coach Updates.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Coach Updates Suppression]" value="0"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Subscribe To Coach Updates" type="submit" />
+            </form>
+          {/if}
+        </div>
+        {/if}
+
         <!-- Unsubscribe from all emails! -->
         <div class="message optout-all">
           <p>
