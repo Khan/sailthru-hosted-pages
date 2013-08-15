@@ -126,7 +126,7 @@
         This does not opt people out from any kind of list - only
         transactional emails with a certain template name sent to the user.
 
-        TODO(dmnd): This seems broken to me.
+        TODO(dmnd): Opt in for this is broken, waiting on a fix from Sailthru.
         -->
         {if !profile.optout && template}
           {if contains(profile.optout_templates, template)}
