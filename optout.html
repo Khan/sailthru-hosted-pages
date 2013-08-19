@@ -195,12 +195,12 @@
 
         {if !profile.optout && contains(profile.lists, "All Coaches")}
         <div class="message optout">
-            <p>
-              Subscribe to "Coach Updates" if you're coaching someone else via
-              Khan Academy. From time to time we'll send updates about
-              coaching-specific features such as new reports or ways to guide
-              the content your student works on.
-            </p>
+          <p>
+            Subscribe to "Coach Updates" if you're coaching someone else via
+            Khan Academy. From time to time we'll send updates about
+            coaching-specific features such as new reports or ways to guide
+            the content your student works on.
+          </p>
           {if !contains(profile.lists, "Coach Updates Suppression")}
             <p>
               You are currently subscribed to Coach Updates.
@@ -218,6 +218,35 @@
               <input type="hidden" name="lists[Coach Updates Suppression]" value="0"/>
               <input class="simple-button submit-button" name="action"
                      value="Subscribe To Coach Updates" type="submit" />
+            </form>
+          {/if}
+        </div>
+        {/if}
+
+        {if !profile.optout}
+        <div class="message optout">
+          <p>
+            Subscribe to "Big Announcements" to be the first to know about
+            significant updates to Khan Academy. We'll email you about big
+            new features, content and news.
+          </p>
+          {if !contains(profile.lists, "Big Announcements Suppression")}
+            <p>
+              You are currently subscribed to Big Announcements.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Big Announcements Suppression]" value="1"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Unsubscribe From Big Announcements" type="submit" />
+            </form>
+          {else}
+            <p>
+              You are currently not subscribed to Big Announcements.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Big Announcements Suppression]" value="0"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Subscribe To Big Announcements" type="submit" />
             </form>
           {/if}
         </div>
