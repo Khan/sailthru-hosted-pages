@@ -128,42 +128,6 @@
 
         TODO(dmnd): Opt in for this is broken, waiting on a fix from Sailthru.
         -->
-        {if !profile.optout && template}
-          {if contains(profile.optout_templates, template)}
-            <div class="message optout">
-              <p>
-                You have unsubscribed from "{template}" email from Khan
-                Academy. If you've changed your mind, click the
-                button below.
-              </p>
-              <form action="" method="post">
-                <input type="hidden" name=".optout_template" value="1"/>
-                <input class="simple-button submit-button" name="action"
-                       value="Subscribe" type="submit" />
-              </form>
-            </div>
-          {else}
-            <div class="message optout">
-              <p>
-                You are currently receiving "{template}" email from Khan
-                Academy.
-                If you'd rather not receive this email you can unsubscribe by
-                clicking the button below.
-              <p>
-              <p>
-                If you ended up here by mistake, please just close this
-                window.
-              </p>
-              <form action="" method="post">
-                <input type="hidden" name="template" value="{template}">
-                <input type="hidden" name=".optout_template" value="1"/>
-                <input class="simple-button submit-button" name="action"
-                       value="Unsubscribe From Just This Email" type="submit" />
-              </form>
-            </div>
-          {/if}
-        {/if}
-
         {if !profile.optout && contains(profile.lists, "All Teachers")}
         <div class="message optout">
             <p>
@@ -225,10 +189,39 @@
 
         {if !profile.optout}
         <div class="message optout">
+            <p>
+              About once per week, Khan Academy will send you an email about
+              stuff we think you'll be interested in. This could include news
+              about new and interesting content or features.
+            </p>
+          {if !contains(profile.lists, "Stuff You Might Like Suppression")}
+            <p>
+              You are currently subscribed to this email.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Stuff You Might Like Suppression]" value="1"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Unsubscribe" type="submit" />
+            </form>
+          {else}
+            <p>
+              You are not currently subscribed to this email.
+            </p>
+            <form action="" method="post">
+              <input type="hidden" name="lists[Stuff You Might Like Suppression]" value="0"/>
+              <input class="simple-button submit-button" name="action"
+                     value="Subscribe" type="submit" />
+            </form>
+          {/if}
+        </div>
+        {/if}
+
+        {if !profile.optout}
+        <div class="message optout">
           <p>
             Subscribe to "Big Announcements" to be the first to know about
-            significant updates to Khan Academy. We'll email you about big
-            new features, content and news.
+            really significant updates to Khan Academy. We'll only email you
+            with really big new features, content and news.
           </p>
           {if !contains(profile.lists, "Big Announcements Suppression")}
             <p>
@@ -237,7 +230,7 @@
             <form action="" method="post">
               <input type="hidden" name="lists[Big Announcements Suppression]" value="1"/>
               <input class="simple-button submit-button" name="action"
-                     value="Unsubscribe From Big Announcements" type="submit" />
+                     value="Unsubscribe" type="submit" />
             </form>
           {else}
             <p>
@@ -246,7 +239,7 @@
             <form action="" method="post">
               <input type="hidden" name="lists[Big Announcements Suppression]" value="0"/>
               <input class="simple-button submit-button" name="action"
-                     value="Subscribe To Big Announcements" type="submit" />
+                     value="Subscribe" type="submit" />
             </form>
           {/if}
         </div>
@@ -254,37 +247,30 @@
 
         <!-- Unsubscribe from all emails! -->
         <div class="message optout-all">
-          <p>
-            From time to time Khan Academy sends email to let you know
-            about things we think you're interested in. We'll always include
-            a link to unsubscribe from email of this type in the email
-            itself.
-          </p>
-
           {if !profile.optout}
             <p>
-              If, however, you'd rather not receive <strong>any</strong>
-              marketing email from Khan Academy, please click on the button
-              below. Note that you will still receive critical emails such as
-              forgotten password requests.
+              If you'd rather not receive <strong>any</strong> marketing email
+              from Khan Academy, click on the button below. Note that you will
+              still receive critical emails such as forgotten password
+              requests.
             </p>
             <form action="" method="post">
               <input type="hidden" name =".optout_all" value="1" />
               <input class="simple-button submit-button" name="action"
-                     value="Unsubscribe From All Email" type="submit" />
+                     value="Turn Off Email" type="submit" />
             </form>
           {else}
             <p>
-              You have elected to not receive this email. Note that you
-              will still receive critical email like password resets.
-            </p>
-            <p>
-              If you would prefer to start receiving email again, please press
-             the button below.
+              You have turned off all marketing email from Khan Academy. Note
+              that you will still receive critical email such as password
+              resets, and other emails directly related to your activity.
+
+              If you'd like to receive updates about Khan Academy again, please
+              press the button below.
             </p>
             <form action="" method="post">
               <input class="simple-button submit-button" name="action"
-                     value="Subscribe" type="submit" />
+                     value="Turn On Email" type="submit" />
             </form>
           {/if}
         </div>
